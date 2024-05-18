@@ -32,10 +32,11 @@ class MainActivity : AppCompatActivity() {
     fun bindCameraUseCases(cameraProvider: ProcessCameraProvider) {
         val cameraSelector = CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_BACK).build()
 
-        var preview : Preview = Preview.Builder().build()
+        val preview : Preview = Preview.Builder().build()
 
         preview.setSurfaceProvider(previewView.getSurfaceProvider())
-        var camera  = cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, preview)
+        cameraProvider.unbindAll()
+        cameraProvider.bindToLifecycle(this, cameraSelector, preview)
     }
 
     fun get_permission() {
